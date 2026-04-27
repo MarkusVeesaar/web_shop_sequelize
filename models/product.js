@@ -20,6 +20,11 @@ const Product = sequelize.define('product', {
   description: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  UserId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    foreignKey: true
   }
 });
 
