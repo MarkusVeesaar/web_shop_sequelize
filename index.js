@@ -20,6 +20,9 @@ app.use('/admin', productAdminRoutes);
 const productRoutes = require('./routes/products');
 app.use(productRoutes);
 
+const ShopRoutes = require('./routes/shop');
+app.use(ShopRoutes);
+
 const sequelize = require('./util/db');
 const models = require('./models/index');
 sequelize.models = models;
@@ -36,7 +39,10 @@ sequelize
     return user;
   })
   .then((user) => {
-    console.log(user)
+    return user.createCart()
+  })
+  .then((cart) => {
+    console.log(cart)
     app.listen(3002);
   })
   .catch((error) => {
