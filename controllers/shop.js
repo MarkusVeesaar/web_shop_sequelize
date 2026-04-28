@@ -20,29 +20,29 @@ class shopController {
         })
     }
     
-async addProduct(req, res) {
-    const prodId = req.body.id; // Eeldame, et saadad toote ID body-ga
-    const cart = await req.user.getCart();
+    async addProduct(req, res) {
+        const prodId = req.body.id; // Eeldame, et saadad toote ID body-ga
+        const cart = await req.user.getCart();
     
-    // 1. Kontrollime, kas toode on juba korvis
-    const products = await cart.getProducts({ where: { id: prodId } });
-    let product;
-    let newQuantity = 1;
+        // 1. Kontrollime, kas toode on juba korvis
+        const products = await cart.getProducts({ where: { id: prodId } });
+        let product;
+        let newQuantity = 1;
 
-    if (products.length > 0) {
-        product = products[0];
-    }
+        if (products.length > 0) {
+            product = products[0];
+        }
 
-    // 2. Kui on olemas, suurendame kogust vahetabelis (CartItem)
-    if (product) {
-        const oldQuantity = product.cartItem.quantity;
-        newQuantity = oldQuantity + 1;
-        await cart.addProduct(product, { through: { quantity: newQuantity } });
-    } else {
-        // 3. Kui ei ole, leiame toote üldisest tabelist ja lisame korvi
-        const productToAdd = await models.Product.findByPk(prodId);
-        await cart.addProduct(productToAdd, { through: { quantity: newQuantity } });
-    }
+        // 2. Kui on olemas, suurendame kogust vahetabelis (CartItem)
+        if (product) {
+            const oldQuantity = product.cartItem.quantity;
+            newQuantity = oldQuantity + 1;
+            await cart.addProduct(product, { through: { quantity: newQuantity } });
+        } else {
+            // 3. Kui ei ole, leiame toote üldisest tabelist ja lisame korvi
+            const productToAdd = await Product.findByPk(prodId);
+            await cart.addProduct(productToAdd, { through: { quantity: newQuantity } });
+        }
 
     res.status(201).json({
         message: 'Toode on lisatud ostukorvi'
