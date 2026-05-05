@@ -38,5 +38,14 @@ models.Product.belongsTo(models.User, {constraints: true, onDelete: 'CASCADE'})
 models.User.hasOne(models.Cart)
 models.Cart.belongsTo(models.User)
 
+models.Order = require("./order.js")
+models.OrderItem = require("./order-items.js")
+
+models.Order.belongsToMany(models.Product, {through: models.OrderItem})
+models.Product.belongsToMany(models.Order, {through: models.OrderItem})
+models.User.hasMany(models.Order)
+models.Order.belongsTo(models.User)
+
+
   return models;
 })();

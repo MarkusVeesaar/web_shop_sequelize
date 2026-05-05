@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const models = require('./models/index');
 
 const app = express();
 
@@ -24,7 +25,6 @@ const ShopRoutes = require('./routes/shop');
 app.use(ShopRoutes);
 
 const sequelize = require('./util/db');
-const models = require('./models/index');
 sequelize.models = models;
 
 sequelize

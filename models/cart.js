@@ -7,7 +7,8 @@ const Cart = sequelize.define('cart', {
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
-  }
+  },
+  totalPrice: Sequelize.DOUBLE
 });
 
 module.exports = Cart;

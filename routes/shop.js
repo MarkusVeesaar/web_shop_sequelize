@@ -5,5 +5,6 @@ const shopController = require('../controllers/shop')
 router.get('/cart', (req, res) => shopController.getCart(req, res))
 router.post('/cart/add', (req, res) => shopController.addProduct(req, res))
 router.post('/cart/delete', (req, res) => shopController.postCartDeleteProduct(req, res))
+router.post('/order', (req, res) => shopController.createOrder(req, res))
 
 module.exports = router
